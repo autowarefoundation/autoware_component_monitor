@@ -2,6 +2,15 @@
 Changelog for package autoware_component_monitor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.0 (2026-10-16)
+------------------
+* First release from the standalone repository. The package moved out of ``autoware_universe`` and is registered in the Autoware Index.
+* chore(autoware_component_monitor): update maintainers (`#13499 <https://github.com/autowarefoundation/autoware_universe/issues/13499>`_)
+* fix(autoware_component_monitor): treat suffix-less RES as KiB (`#12217 <https://github.com/autowarefoundation/autoware_universe/issues/12217>`_)
+* fix: correct the publish rate docs and schema default
+* docs: describe the package in package.xml
+* Contributors: Mete Fatih Cırıt, Mikhail
+
 0.53.0 (2026-09-29)
 -------------------
 * Merge remote-tracking branch 'origin/main' into prepare-0.53.0-changelog
