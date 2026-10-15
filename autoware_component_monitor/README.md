@@ -20,7 +20,11 @@ None.
 
 ### Core Parameters
 
-{{ json_to_markdown("system/autoware_component_monitor/schema/component_monitor.schema.json") }}
+| Parameter      | Type   | Default | Description        |
+| -------------- | ------ | ------- | ------------------ |
+| `publish_rate` | number | `5.0`   | Publish rate in Hz |
+
+The [parameter schema](schema/component_monitor.schema.json) and the [parameter file](config/component_monitor.param.yaml) define this default.
 
 ## How to use
 
