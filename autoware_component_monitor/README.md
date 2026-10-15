@@ -64,7 +64,7 @@ ros2 component load /pointcloud_container autoware_component_monitor autoware::c
 ## How it works
 
 The package uses the `top` command under the hood.
-`top -b -n 1 -E k -p PID` command is run at 10 Hz to get the system usage of the process.
+`top -b -n 1 -E k -p PID` command is run at `publish_rate` (5 Hz by default) to get the system usage of the process.
 
 - `-b` activates the batch mode. By default, `top` doesn't exit and prints to stdout periodically. Batch mode allows
   exiting the program.
