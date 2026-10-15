@@ -1,0 +1,24 @@
+- repository: autowarefoundation/sync-file-templates
+  source-dir: sources
+  files:
+    - source: .github/dependabot.yaml
+    - source: .github/stale.yml
+    - source: .github/workflows/github-release.yaml
+    - source: .github/workflows/pre-commit.yaml
+    - source: .github/workflows/semantic-pull-request.yaml
+    - source: .github/workflows/spell-check-differential.yaml
+    - source: .github/workflows/spell-check-daily.yaml
+    - source: .github/workflows/sync-files.yaml
+    - source: .clang-format
+    - source: .clang-tidy
+    - source: .markdownlint.yaml
+    - source: .pre-commit-config.yaml
+    - source: .prettierignore
+    - source: .prettierrc.yaml
+    - source: .yamllint.yaml
+    - source: CODE_OF_CONDUCT.md
+    - source: CONTRIBUTING.md
+    - source: CPPLINT.cfg
+    - source: DISCLAIMER.md
+    - source: LICENSE
+    - source: setup.cfg
