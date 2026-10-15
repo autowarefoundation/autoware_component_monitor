@@ -1,0 +1,32 @@
+name: autoware-index-validate
+
+# Build + test + clang-tidy this package for each ROS distro it is
+# registered for in autowarefoundation/autoware-index/distributions/.
+#
+# Calls the producer-mode reusable workflow from
+# autoware-index-github-actions; that workflow resolves the freshest
+# published Autoware release at runtime, so this package does not have
+# to bump CI per Autoware release. The pinned Autoware Core container
+# image already contains the matching Core build, so no
+# build_depends.repos is needed in this repo.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ros_distro: jazzy
+    uses: autowarefoundation/autoware-index-github-actions/.github/workflows/validate-package.yaml@main
+    with:
+      ros_distro: ${{ matrix.ros_distro }}
+      package_name: autoware_component_monitor
+      pull-ccache: ${{ github.event_name != 'push' || github.ref != 'refs/heads/main' }}
+      push-ccache: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      cache-key-element: build
+      concurrency-group: autoware-index-validate-${{ matrix.ros_distro }}-${{ github.event_name == 'push' && 'main' || github.ref }}
