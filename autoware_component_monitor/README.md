@@ -86,3 +86,5 @@ KiB Swap: 39062524 total, 39062524 free,        0 used. 45520816 avail Mem
 ```
 
 We get 5th, 8th fields from the last line, which are RES, %CPU respectively.
+
+The total and free system memory come from the [`sysinfo(2)`](https://man7.org/linux/man-pages/man2/sysinfo.2.html) system call, not from the `top` output.

@@ -63,6 +63,7 @@ private:
    *    3352 meb       20   0 2905940   1,2g  39292 S   0,0   2,0  23:24.01 awesome
    *
    * We get 5th and 8th fields, which are RES, %CPU, respectively.
+   * The total and free system memory come from sysinfo(2), not from this output.
    */
   ResourceUsageReport pid_to_report(const pid_t & pid) const;
 
