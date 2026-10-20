@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// cspell:ignore freeram, totalram
+
 #include "component_monitor_node.hpp"
 
 #include "top_memory_parser.hpp"
@@ -82,7 +84,7 @@ void ComponentMonitor::on_timer_tick(const int pid) const
 
 ComponentMonitor::ResourceUsageReport ComponentMonitor::pid_to_report(const pid_t & pid) const
 {
-  const auto std_out = run_system_command("top -b -n 1 -E k -p " + std::to_string(pid));
+  const auto std_out = run_system_command("top -b -n 1 -p " + std::to_string(pid));
 
   const auto fields = parse_lines_into_words(std_out);
 
