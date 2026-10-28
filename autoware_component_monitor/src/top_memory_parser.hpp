@@ -34,8 +34,8 @@ namespace autoware::component_monitor
  * - With a suffix (e.g., "25.3m", "1.2g") according to the task-area scaling (`-e`).
  * - Without a suffix (e.g., "29548"). In that case, the value is in KiB.
  *
- * The current component monitor uses `top -b -n 1 -E k -p <pid>`; note `-E` only affects the
- * summary section, while the task area (where RES is shown) follows `-e` scaling/defaults.
+ * The current component monitor uses `top -b -n 1 -p <pid>`. The task area (where RES is shown)
+ * follows `-e` scaling/defaults.
  */
 inline std::uint64_t parse_top_res_to_bytes(const std::string & mem_res)
 {

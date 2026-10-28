@@ -51,18 +51,19 @@ private:
   /**
    * @brief Get system usage of the component.
    *
-   * @details The output of top -b -n 1 -E k -p PID` is like below:
+   * @details The output of `top -b -n 1 -p PID` is like below:
    *
-   * top - 13:57:26 up  3:14,  1 user,  load average: 1,09, 1,10, 1,04
+   * top - 10:25:47 up 18:24,  1 user,  load average: 1.34, 1.38, 1.43
    * Tasks:   1 total,   0 running,   1 sleeping,   0 stopped,   0 zombie
-   * %Cpu(s):  0,0 us,  0,8 sy,  0,0 ni, 99,2 id,  0,0 wa,  0,0 hi,  0,0 si,  0,0 st
-   * KiB Mem : 65532208 total, 35117428 free, 17669824 used, 12744956 buff/cache
-   * KiB Swap: 39062524 total, 39062524 free,        0 used. 45520816 avail Mem
+   * %Cpu(s):  6.7 us,  2.1 sy,  0.0 ni, 91.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+   * MiB Mem : 128731.0 total,  49006.2 free,  24414.5 used,  56026.2 buff/cache
+   * MiB Swap: 150464.0 total, 150464.0 free,      0.0 used. 104316.5 avail Mem
    *
    *     PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
-   *    3352 meb       20   0 2905940   1,2g  39292 S   0,0   2,0  23:24.01 awesome
+   * 3230885 mfc       20   0   10408   3804   3424 S   0.0   0.0   0:00.00 bash
    *
    * We get 5th and 8th fields, which are RES, %CPU, respectively.
+   * The total and free system memory come from sysinfo(2), not from this output.
    */
   ResourceUsageReport pid_to_report(const pid_t & pid) const;
 

@@ -1,3 +1,5 @@
+<!-- cspell:ignore LXCFS, sysinfo -->
+
 # autoware_component_monitor
 
 The `autoware_component_monitor` package allows monitoring system usage of component containers.
@@ -64,25 +66,27 @@ ros2 component load /pointcloud_container autoware_component_monitor autoware::c
 ## How it works
 
 The package uses the `top` command under the hood.
-`top -b -n 1 -E k -p PID` command is run at `publish_rate` (5 Hz by default) to get the system usage of the process.
+`top -b -n 1 -p PID` command is run at `publish_rate` (5 Hz by default) to get the system usage of the process.
 
 - `-b` activates the batch mode. By default, `top` doesn't exit and prints to stdout periodically. Batch mode allows
   exiting the program.
 - `-n` number of times should `top` prints the system usage in batch mode.
 - `-p` specifies the PID of the process to monitor.
-- `-E k` changes the memory unit in the summary section to KiB.
 
 Here is a sample output:
 
 ```text
-top - 13:57:26 up  3:14,  1 user,  load average: 1,09, 1,10, 1,04
+top - 10:25:47 up 18:24,  1 user,  load average: 1.34, 1.38, 1.43
 Tasks:   1 total,   0 running,   1 sleeping,   0 stopped,   0 zombie
-%Cpu(s):  0,0 us,  0,8 sy,  0,0 ni, 99,2 id,  0,0 wa,  0,0 hi,  0,0 si,  0,0 st
-KiB Mem : 65532208 total, 35117428 free, 17669824 used, 12744956 buff/cache
-KiB Swap: 39062524 total, 39062524 free,        0 used. 45520816 avail Mem
+%Cpu(s):  6.7 us,  2.1 sy,  0.0 ni, 91.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem : 128731.0 total,  49006.2 free,  24414.5 used,  56026.2 buff/cache
+MiB Swap: 150464.0 total, 150464.0 free,      0.0 used. 104316.5 avail Mem
 
     PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
-   3352 meb       20   0 2905940   1,2g  39292 S   0,0   2,0  23:24.01 awesome
+3230885 mfc       20   0   10408   3804   3424 S   0.0   0.0   0:00.00 bash
 ```
 
 We get 5th, 8th fields from the last line, which are RES, %CPU respectively.
+
+The total and free system memory come from the [`sysinfo(2)`](https://man7.org/linux/man-pages/man2/sysinfo.2.html) system call, not from the `top` output.
+Under [LXCFS](https://github.com/lxc/lxcfs), for example in LXC or LXD containers, `sysinfo()` reports the memory of the host, not of the container.

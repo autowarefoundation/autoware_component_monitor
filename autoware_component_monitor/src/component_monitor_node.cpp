@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// cspell:ignore freeram, totalram
+
 #include "component_monitor_node.hpp"
 
 #include "top_memory_parser.hpp"
-#include "unit_conversions.hpp"
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -23,11 +24,16 @@
 
 #include <boost/process.hpp>
 
+#include <sys/sysinfo.h>
+
 #include <cctype>
+#include <cerrno>
 #include <cstdint>
+#include <cstring>
 #include <exception>
 #include <functional>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -78,14 +84,19 @@ void ComponentMonitor::on_timer_tick(const int pid) const
 
 ComponentMonitor::ResourceUsageReport ComponentMonitor::pid_to_report(const pid_t & pid) const
 {
-  const auto std_out = run_system_command("top -b -n 1 -E k -p " + std::to_string(pid));
+  const auto std_out = run_system_command("top -b -n 1 -p " + std::to_string(pid));
 
   const auto fields = parse_lines_into_words(std_out);
 
+  struct sysinfo info{};
+  if (sysinfo(&info) != 0) {
+    throw std::runtime_error(std::string("sysinfo() failed: ") + std::strerror(errno));
+  }
+
   ResourceUsageReport report;
   report.cpu_cores_utilized = std::stof(fields.back().at(8)) / 100.0f;
-  report.total_memory_bytes = unit_conversions::kib_to_bytes(std::stoul(fields.at(3).at(3)));
-  report.free_memory_bytes = unit_conversions::kib_to_bytes(std::stoul(fields.at(3).at(5)));
+  report.total_memory_bytes = static_cast<std::uint64_t>(info.totalram) * info.mem_unit;
+  report.free_memory_bytes = static_cast<std::uint64_t>(info.freeram) * info.mem_unit;
   report.process_memory_bytes = parse_memory_res(fields.back().at(5));
 
   return report;
