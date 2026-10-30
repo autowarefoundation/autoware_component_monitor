@@ -2,6 +2,11 @@
 Changelog for package autoware_component_monitor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.1 (2026-10-30)
+------------------
+* fix: read system memory with sysinfo() instead of parsing top (`#1 <https://github.com/autowarefoundation/autoware_component_monitor/issues/1>`_)
+* Contributors: Mete Fatih Cırıt
+
 1.0.0 (2026-10-16)
 ------------------
 * First release from the standalone repository. The package moved out of ``autoware_universe`` and is registered in the Autoware Index.
