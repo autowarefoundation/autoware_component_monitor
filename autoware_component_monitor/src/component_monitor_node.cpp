@@ -22,7 +22,36 @@
 
 #include <autoware_internal_msgs/msg/resource_usage_report.hpp>
 
+// Boost 1.88 made Boost.Process v2 the default; v1 stays available under boost/process/v1/
+#if __has_include(<boost/process/v1/child.hpp>)
+#ifndef BOOST_PROCESS_VERSION
+#define BOOST_PROCESS_VERSION 1
+#endif
+#if __has_include(<boost/process/v1.hpp>)
+#include <boost/process/v1.hpp>
+#else  // Boost 1.88 has the v1 headers but not v1.hpp
+#include <boost/process/v1/args.hpp>
+#include <boost/process/v1/async.hpp>
+#include <boost/process/v1/async_system.hpp>
+#include <boost/process/v1/group.hpp>
+#include <boost/process/v1/child.hpp>
+#include <boost/process/v1/cmd.hpp>
+#include <boost/process/v1/env.hpp>
+#include <boost/process/v1/environment.hpp>
+#include <boost/process/v1/error.hpp>
+#include <boost/process/v1/exe.hpp>
+#include <boost/process/v1/handles.hpp>
+#include <boost/process/v1/io.hpp>
+#include <boost/process/v1/pipe.hpp>
+#include <boost/process/v1/shell.hpp>
+#include <boost/process/v1/search_path.hpp>
+#include <boost/process/v1/spawn.hpp>
+#include <boost/process/v1/system.hpp>
+#include <boost/process/v1/start_dir.hpp>
+#endif
+#else
 #include <boost/process.hpp>
+#endif
 
 #include <sys/sysinfo.h>
 
